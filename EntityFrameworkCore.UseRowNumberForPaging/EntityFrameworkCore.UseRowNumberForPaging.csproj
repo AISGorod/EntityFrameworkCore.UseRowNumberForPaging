@@ -2,7 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-		<Version>0.7</Version>
 		<Authors>Rwing</Authors>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RepositoryUrl>https://github.com/Rwing/EntityFrameworkCore.UseRowNumberForPaging</RepositoryUrl>
@@ -13,6 +12,18 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<DebugType>embedded</DebugType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<UseEfCore8>false</UseEfCore8>
+		<UseEfCore9>true</UseEfCore9>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(UseEfCore8)' == 'true'">
+		<DefineConstants>$(DefineConstants);USE_EF_CORE_8</DefineConstants>
+		<Version>0.8</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(UseEfCore9)' == 'true'">
+		<DefineConstants>$(DefineConstants);USE_EF_CORE_9</DefineConstants>
+		<Version>0.9</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework) != 'net9.0'">
@@ -23,11 +34,11 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="all" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<ItemGroup Condition="'$(UseEfCore8)' == 'true'">
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+	<ItemGroup Condition="'$(UseEfCore9)' == 'true'">
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
 	</ItemGroup>

@@ -17,9 +17,9 @@ namespace EntityFrameworkCore.UseRowNumberForPaging
             => new SqlServer2008QueryTranslationPostprocessor(
                 _dependencies,
                 _relationalDependencies,
-#if NET9_0_OR_GREATER
+#if USE_EF_CORE_9
                 (RelationalQueryCompilationContext)queryCompilationContext
-#else
+#elif USE_EF_CORE_8
                 queryCompilationContext
 #endif
             );
@@ -28,9 +28,9 @@ namespace EntityFrameworkCore.UseRowNumberForPaging
             public SqlServer2008QueryTranslationPostprocessor(
                 QueryTranslationPostprocessorDependencies dependencies,
                 RelationalQueryTranslationPostprocessorDependencies relationalDependencies,
-#if NET9_0_OR_GREATER
+#if USE_EF_CORE_9
                 RelationalQueryCompilationContext queryCompilationContext
-#else
+#elif USE_EF_CORE_8
                 QueryCompilationContext queryCompilationContext
 #endif
             )
@@ -40,9 +40,9 @@ namespace EntityFrameworkCore.UseRowNumberForPaging
             public override Expression Process(Expression query)
             {
                 query = base.Process(query);
-#if NET9_0_OR_GREATER
+#if USE_EF_CORE_9
                 query = new Offset2RowNumberConvertVisitor(query, RelationalDependencies.SqlExpressionFactory, RelationalQueryCompilationContext.SqlAliasManager).Visit(query);
-#else
+#elif USE_EF_CORE_8
                 query = new Offset2RowNumberConvertVisitor(query, RelationalDependencies.SqlExpressionFactory).Visit(query);
 #endif
                 return query;

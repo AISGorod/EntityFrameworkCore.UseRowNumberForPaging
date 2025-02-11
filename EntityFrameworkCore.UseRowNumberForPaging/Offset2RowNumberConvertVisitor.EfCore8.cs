@@ -1,4 +1,4 @@
-#if !NET9_0_OR_GREATER
+#if USE_EF_CORE_8
 using System;
 using System.Collections.Generic;
 using System.Linq;
